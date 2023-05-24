@@ -2,10 +2,18 @@
 
 # Curry class
 class Curry
-  attr_accessor :karasa, :ryou
+  attr_reader :karasa, :ryou
 
   def initialize(karasa = 3, ryou = 300)
+    set_karasa(karasa)
+    set_ryou(ryou)
+  end
+
+  def set_karasa(karasa)
     @karasa = karasa
+  end
+
+  def set_ryou(ryou)
     @ryou = ryou
   end
 end
@@ -13,7 +21,14 @@ end
 # KodomoCurry class
 class KodomoCurry < Curry
   def initialize(karasa = 1, ryou = 200)
-    super(karasa, ryou)
+    set_karasa(karasa)
+    set_ryou(ryou)
+  end
+
+  def set_karasa(karasa)
+    raise unless karasa <= 1
+
+    @karasa = karasa
   end
 
   def open_omake
@@ -24,7 +39,7 @@ end
 iguano = Curry.new(5)
 setgo = KodomoCurry.new
 
-iguano.karasa = 99
+iguano.set_karasa(99)
 
 puts 'iguano'
 puts " karasa = #{iguano.karasa}"
