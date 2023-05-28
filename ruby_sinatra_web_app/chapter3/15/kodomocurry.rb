@@ -14,6 +14,8 @@ class Curry
   end
 
   def set_ryou(ryou)
+    raise unless ryou >= 0
+
     @ryou = ryou
   end
 end
@@ -58,3 +60,11 @@ puts " karasa = #{setgo.karasa}"
 puts " ryou = #{setgo.ryou}"
 setgo.open_omake
 setgo.open_omake
+
+puts 'setgo2'
+# 量が負の値の場合はエラー
+# setgo2 = KodomoCurry.new(1, -1)
+# setgo2 = KodomoCurry.new
+setgo2 = KodomoCurry.new
+setgo2.open_omake
+setgo2.open_omake
