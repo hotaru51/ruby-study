@@ -28,4 +28,41 @@ def zeller(year, month, day)
   (y + (y / 4).floor - (y / 100).floor + (y / 400) + ((13 * m + 8) / 5).floor + d) % 7
 end
 
-puts zeller(2023, 1, 11)
+now = Time.now
+year = now.year
+month = now.month
+
+if ARGV.length >= 2
+  year = ARGV[0].to_i
+  month = ARGV[1].to_i
+end
+
+if year <= 0
+  warn "invalid value. [#{year}]"
+  exit 1
+end
+
+if !(1..12).include?(month)
+  warn "invalid value. [#{month}]"
+  exit 1
+end
+
+puts "西暦 #{year} 年 #{month} 月"
+puts 'Sun Mon Tue Wed Thu Fir Sat'
+
+w = zeller(year, month, 1)
+c = 0
+while c < w
+  print '    '
+  c += 1
+end
+
+ld = last_day(year, month)
+
+(1..ld).each do |d|
+  print format(' %2d ', d)
+  c += 1
+  print "\n" if (c % 7).zero?
+end
+
+print "\n"
