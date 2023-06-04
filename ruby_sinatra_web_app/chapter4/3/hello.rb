@@ -5,5 +5,5 @@ require 'sinatra'
 set :environment, :production
 
 get '/' do
-  'Hello, A Whole New World.'
+  erb :index
 end
