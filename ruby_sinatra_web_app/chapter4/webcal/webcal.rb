@@ -36,25 +36,37 @@ get '/:y/:m' do
   @year = params[:y].to_i
   @month = params[:m].to_i
 
-  puts "西暦 #{@year} 年 #{@month} 月"
-  puts 'Sun Mon Tue Wed Thu Fir Sat'
-
-  w = zeller(@year, @month, 1)
-  c = 0
-  while c < w
-    print '    '
-    c += 1
-  end
+  @cal_table = '<table border>'
+  @cal_table += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>'
 
   ld = last_day(@year, @month)
+  w = zeller(@year, @month, 1)
 
-  (1..ld).each do |d|
-    print format(' %2d ', d)
-    c += 1
-    print "\n" if (c % 7).zero?
+  day = 1
+  6.times do |p|
+    @cal_table += '<tr>'
+
+    7.times do |q|
+      if p.zero? && q < w
+        @cal_table += '<td></td>'
+      else
+        if day <= ld
+          @cal_table += "<td>#{day}</td>"
+          day += 1
+        else
+          @cal_table += '<td></td>'
+        end
+      end
+    end
+
+    @cal_table += '</tr>'
+
+    if day > ld
+      break
+    end
   end
 
-  print "\n"
+  @cal_table += '</table>'
 
   erb :moncal
 end
