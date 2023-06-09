@@ -32,6 +32,11 @@ def zeller(year, month, day)
   (y + (y / 4).floor - (y / 100).floor + (y / 400) + ((13 * m + 8) / 5).floor + d) % 7
 end
 
+get '/' do
+  now = Time.now
+  redirect "/#{now.year}/#{now.month}"
+end
+
 get '/:y/:m' do
   @year = params[:y].to_i
   @month = params[:m].to_i
