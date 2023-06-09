@@ -51,7 +51,7 @@ get '/:y/:m' do
         @cal_table += '<td></td>'
       else
         if day <= ld
-          @cal_table += "<td>#{day}</td>"
+          @cal_table += day_tag(@year, @month, day)
           day += 1
         else
           @cal_table += '<td></td>'
@@ -69,4 +69,13 @@ get '/:y/:m' do
   @cal_table += '</table>'
 
   erb :moncal
+end
+
+def day_tag(year, month, day)
+  dow = zeller(year, month, day)
+  case dow
+  when 0 then "<td align=\"right\"><font color=\"red\">#{day}</font></td>"
+  when 6 then "<td align=\"right\"><font color=\"blue\">#{day}</font></td>"
+  else "<td align=\"right\">#{day}</td>"
+  end
 end
