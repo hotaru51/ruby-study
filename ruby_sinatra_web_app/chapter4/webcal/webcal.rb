@@ -73,6 +73,20 @@ get '/:y/:m' do
 
   @cal_table += '</table>'
 
+  @next_year = @year
+  @next_month = @month + 1
+  if @next_month >= 13
+    @next_year += 1
+    @next_month = 1
+  end
+
+  @prev_year = @year
+  @prev_month = @month - 1
+  if @prev_month <= 0
+    @prev_year -= 1
+    @prev_month = 12
+  end
+
   erb :moncal
 end
 
