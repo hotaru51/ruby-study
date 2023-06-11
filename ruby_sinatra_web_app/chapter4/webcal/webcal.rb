@@ -38,8 +38,13 @@ get '/' do
 end
 
 get '/:y/:m' do
-  @year = params[:y].to_i
-  @month = params[:m].to_i
+  if valid_date?(params[:y], params[:m])
+    @year = params[:y].to_i
+    @month = params[:m].to_i
+  else
+    now = Time.now
+    redirect "/#{now.year}/#{now.month}"
+  end
 
   @cal_table = '<table border>'
   @cal_table += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>'
@@ -107,4 +112,15 @@ def day_tag(year, month, day)
   when 6 then "<td align=\"right\"><font color=\"blue\">#{d}</font></td>"
   else "<td align=\"right\">#{d}</td>"
   end
+end
+
+def valid_date?(year, month)
+  y = year.to_i
+  m = month.to_i
+
+  return false if y.negative?
+
+  return false unless (1..12).include?(m)
+
+  true
 end
