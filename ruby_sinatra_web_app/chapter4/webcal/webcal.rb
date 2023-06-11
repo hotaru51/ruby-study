@@ -92,9 +92,19 @@ end
 
 def day_tag(year, month, day)
   dow = zeller(year, month, day)
+  d = day.to_s
+  now = Time.now
+  today = {
+    year: now.year,
+    month: now.month,
+    day: now.day
+  }
+
+  d = "<b>[#{d}]</d>" if today[:year] == year && today[:month] == month && today[:day] == day
+
   case dow
-  when 0 then "<td align=\"right\"><font color=\"red\">#{day}</font></td>"
-  when 6 then "<td align=\"right\"><font color=\"blue\">#{day}</font></td>"
-  else "<td align=\"right\">#{day}</td>"
+  when 0 then "<td align=\"right\"><font color=\"red\">#{d}</font></td>"
+  when 6 then "<td align=\"right\"><font color=\"blue\">#{d}</font></td>"
+  else "<td align=\"right\">#{d}</td>"
   end
 end
